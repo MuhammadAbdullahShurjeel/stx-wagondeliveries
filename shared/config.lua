@@ -75,7 +75,7 @@ Config.Deliveries = {
                 wagonModel = "cart01",
                 cargo = "pg_teamster_cart01_breakables",
                 light = "pg_teamster_cart01_lightupgrade3",
-                deliveryLoc = vector3(-350.7503, 788.47381, 116.0307),
+                deliveryLoc = vector3(-750.20, -1206.24, 43.33),
             },
             {
                 label = "Strawberry Delivery",
@@ -1282,4 +1282,5 @@ Config.Deliveries = {
 
 
 }
+
 
