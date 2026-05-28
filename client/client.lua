@@ -5,6 +5,7 @@ local wagonmodel = nil
 local endcoords = nil
 local tempdata2 = nil
 local tempamount = nil
+local currentDeliveryId = 0
 
 function DrawText3D(x, y, z, text)
     local onScreen,_x,_y=GetScreenCoordFromWorldCoord(x, y, z)
@@ -126,8 +127,10 @@ RegisterNetEvent("stx-wagondeliveries:client:startDelivery", function(MainLocati
     if spawn_cart_with_gps_mission(MainLocationData, MainLocationDeliveryData) then
         Config.Notify_Client("Delivery", "Deliver the cart to the destination", "info", 5000)
         local noted = false
+        currentDeliveryId = currentDeliveryId + 1
+        local myDeliveryId = currentDeliveryId
         CreateThread(function()
-            while true do
+            while myDeliveryId == currentDeliveryId do
                 if wagonSpawned == true then
                     local vehpos = GetEntityCoords(wagonmodel, true)
                     if #(vehpos - endcoords) < 250.0 then
@@ -145,7 +148,7 @@ RegisterNetEvent("stx-wagondeliveries:client:startDelivery", function(MainLocati
                     end
                 end
                 Wait(sleep)
-            end 
+            end
         end)
     end
 
@@ -155,7 +158,7 @@ end)
 RegisterNetEvent("stx-wagondeliveries:client:cancelDelivery", function(check)
     if check then
         if wagonSpawned and isDeliveryStarted then
-            Config.Notify_Client("Delivery", "Mission Cancelled", "error", 5000)
+            currentDeliveryId = currentDeliveryId + 1
             ClearGpsMultiRoute(endcoords)
             endcoords = nil
             DeleteVehicle(wagonmodel)
@@ -164,6 +167,7 @@ RegisterNetEvent("stx-wagondeliveries:client:cancelDelivery", function(check)
             isWagonDelivered = false
             tempdata2 = nil
             tempamount = nil
+            Config.Notify_Client("Delivery", "Mission Cancelled", "error", 5000)
         else
             Config.Notify_Client("Delivery", "Either Cart isn't spawned or Mission isn't started.", "error", 5000)
         end
