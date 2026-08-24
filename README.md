@@ -45,4 +45,4 @@ Players can choose a **delivery destination** from available towns, deliver cart
 ---
 ## Support
 
-- [Join Discord](https://discord.gg/fPjSxEHFMt)
+- [Join Discord](https://discord.gg/9MBXhPZnuD)
